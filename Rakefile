@@ -14,6 +14,9 @@ OBJ_EXT ||= '.o'
 SOURCES = [ 'stack.c', 'main.c' ]
 OBJECTS = SOURCES.map {|x| x.sub(/\.c$/, OBJ_EXT) }
 
+LIBSTACK_SOURCES = (SOURCES - ['main.c'])
+LIBSTACK_OBJECTS = LIBSTACK_SOURCES.map {|x| x.sub(/\.c$/, OBJ_EXT) }
+
 LIBSTACK_SO = 'libstack' + DL_EXT
 
 rule OBJ_EXT => [ '.c' ] do |t|
@@ -28,7 +31,7 @@ task default: 'main' do
   sh './main'
 end
 
-file LIBSTACK_SO => OBJECTS do |t|
+file LIBSTACK_SO => LIBSTACK_OBJECTS do |t|
   sh "clang -shared -o #{t.name} #{t.prerequisites.join(' ')}"
 end
 
