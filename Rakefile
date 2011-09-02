@@ -38,6 +38,7 @@ task :clean do
   sh "rm -f main #{LIBSTACK_SO} #{OBJECTS.join(' ')}"
 end
 
+task spec: :shared
 RSpec::Core::RakeTask.new :spec do |t|
   t.rspec_opts = %w[--color]
 end
