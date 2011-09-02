@@ -1,3 +1,5 @@
+require 'rspec/core/rake_task'
+
 case RUBY_PLATFORM
 when /mswin/, /mingw/, /cygwin/
   DL_EXT = '.dll'
@@ -34,4 +36,8 @@ task shared: LIBSTACK_SO
 
 task :clean do
   sh "rm -f main #{LIBSTACK_SO} #{OBJECTS.join(' ')}"
+end
+
+RSpec::Core::RakeTask.new :spec do |t|
+  t.rspec_opts = %w[--color]
 end
